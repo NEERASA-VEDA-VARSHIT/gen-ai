@@ -71,7 +71,8 @@ You can deploy the JavaScript app on:
 Set env variables in deployment dashboard:
 - `GEMINI_API_KEY`
 - `OPENAI_BASE_URL` (default already in `.env.example`)
-- `OPENAI_MODEL` (default `gemini-2.0-flash`)
+- `OPENAI_MODEL` (default `gemini-3-flash`)
+- `OPENAI_FALLBACK_MODEL` (default `gemini-2.0-flash`)
 - `PORT` (if required by platform)
 
 ## Submission Notes

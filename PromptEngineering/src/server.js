@@ -63,14 +63,33 @@ app.post("/api/chat", async (req, res) => {
       return res.status(400).json({ error: "No valid messages provided." });
     }
 
-    const completion = await client.chat.completions.create({
-      model,
-      temperature: 0.7,
-      messages: [
-        { role: "system", content: persona.systemPrompt },
-        ...sanitizedMessages
-      ]
-    });
+    const fallbackModel = process.env.OPENAI_FALLBACK_MODEL || "gemini-2.0-flash";
+    const modelCandidates = [...new Set([model, fallbackModel])];
+    let completion = null;
+    let lastError = null;
+
+    for (const candidate of modelCandidates) {
+      try {
+        completion = await client.chat.completions.create({
+          model: candidate,
+          temperature: 0.7,
+          messages: [
+            { role: "system", content: persona.systemPrompt },
+            ...sanitizedMessages
+          ]
+        });
+        break;
+      } catch (error) {
+        lastError = error;
+        if (error?.status !== 404) {
+          throw error;
+        }
+      }
+    }
+
+    if (!completion) {
+      throw lastError || new Error("No model candidates available.");
+    }
 
     const reply = completion.choices?.[0]?.message?.content?.trim();
     if (!reply) {
@@ -85,7 +104,9 @@ app.post("/api/chat", async (req, res) => {
     console.error("Chat provider error:", error?.status, error?.message, error?.error);
     const message = error?.status === 401
       ? "Authentication failed with AI provider. Check API key."
-      : "The assistant is temporarily unavailable. Please try again.";
+      : error?.status === 429
+        ? "Rate limit or quota exceeded on Gemini API key. Please retry later or check billing/quota."
+        : "The assistant is temporarily unavailable. Please try again.";
 
     res.status(500).json({ error: message });
   }
@@ -95,6 +116,10 @@ app.use((_, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+}
+
+export default app;
