@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Persona AI Chatbot</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <h1>Prompt Engineering - Persona Chatbot</h1>
+        <p>Talk to Anshuman Singh, Abhimanyu Saxena, and Kshitij Mishra</p>
+      </header>
+
+      <section class="persona-panel">
+        <div id="personaTabs" class="persona-tabs" aria-label="Persona selector"></div>
+        <div id="activePersona" class="active-persona"></div>
+      </section>
+
+      <section id="suggestions" class="suggestions"></section>
+
+      <section id="chatWindow" class="chat-window" aria-live="polite"></section>
+      <div id="typingIndicator" class="typing hidden">Persona is typing...</div>
+
+      <form id="chatForm" class="chat-form">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Ask a question..."
+          autocomplete="off"
+          required
+        />
+        <button id="sendBtn" type="submit">Send</button>
+      </form>
+      <p id="errorMsg" class="error hidden"></p>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+node_modules/
+.env
+research/persona_research.json
+research/persona_research_py.json
+__pycache__/
+.venv/

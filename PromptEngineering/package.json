@@ -1,0 +1,19 @@
+{
+  "name": "genai",
+  "version": "1.0.0",
+  "description": "Persona-based chatbot assignment project",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "openai": "^6.34.0"
+  }
+}
