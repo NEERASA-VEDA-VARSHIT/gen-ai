@@ -1,0 +1,23 @@
+{
+  "name": "ai-agent-cli-tool",
+  "version": "1.0.0",
+  "description": "Conversational CLI agent that can generate website files with tool-use loop",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "cli",
+    "openai",
+    "tool-calling"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "openai": "^4.100.0"
+  }
+}
