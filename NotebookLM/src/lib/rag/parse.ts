@@ -14,7 +14,12 @@ class SimplePath2D {
 }
 
 function ensurePdfJsPolyfills() {
-  const globalScope = globalThis as any;
+  const globalScope = globalThis as unknown as {
+    DOMMatrix?: unknown;
+    DOMMatrixReadOnly?: unknown;
+    ImageData?: unknown;
+    Path2D?: unknown;
+  };
 
   globalScope.DOMMatrix ??= SimpleDOMMatrix;
   globalScope.DOMMatrixReadOnly ??= SimpleDOMMatrix;
